@@ -54,7 +54,7 @@ Deploy qilishdan oldin **Environment Variables** ga qo‘shing:
 | Key | Value |
 |-----|-------|
 | `VITE_TELEGRAM_BOT_TOKEN` | Bot token |
-| `VITE_TELEGRAM_CHAT_ID` | Chat ID |
+| `VITE_TELEGRAM_CHAT_ID` | Chat ID yoki bir nechta: `726130790, 5664135803` |
 
 **Vercel:** Project Settings → Environment Variables  
 **Netlify:** Site settings → Build & deploy → Environment variables
