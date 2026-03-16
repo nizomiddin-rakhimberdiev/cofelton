@@ -17,7 +17,7 @@ function App() {
       <div className="container">
         <Hero />
         <About />
-        <img src={coffe} className="coffe" alt="" />
+        {/* <img src={coffe} className="coffe" alt="" /> */}
         <Guarantee />
         <CoffeeCatalog />
         <LocationSection />

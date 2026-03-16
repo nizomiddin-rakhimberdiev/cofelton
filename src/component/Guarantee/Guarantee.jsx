@@ -8,11 +8,11 @@ export default function Guarantee() {
 
   return (
     <section className={styles.guarantee} id={FORM_SECTION_ID}>
-      <h2>
+      {/* <h2>
         {t("guaranteeTitle").split("—")[0]}— <span>{t("guaranteeTitle").split("—")[1]?.trim()}</span>
       </h2>
 
-      <p className={styles.desc}>{t("guaranteeDesc")}</p>
+      <p className={styles.desc}>{t("guaranteeDesc")}</p> */}
 
       <div className={styles.formBox}>
         <h3>

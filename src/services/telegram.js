@@ -16,7 +16,9 @@ export async function sendToTelegram(formData) {
     return { ok: false, error: "Telegram sozlanmagan" };
   }
 
-  const chatIds = CHAT_IDS_RAW.split(",").map((id) => id.trim()).filter(Boolean);
+  const chatIds = CHAT_IDS_RAW.split(",")
+    .map((id) => id.trim())
+    .filter(Boolean);
 
   const { name, phone, formType } = formData;
   const typeLabels = {
@@ -38,30 +40,38 @@ export async function sendToTelegram(formData) {
   ].join("\n");
 
   const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+  let successCount = 0;
+  const errors = [];
 
-  try {
-    const results = await Promise.all(
-      chatIds.map((chatId) =>
-        fetch(url, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            chat_id: chatId,
-            text,
-            parse_mode: "HTML",
-          }),
-        })
-      )
-    );
-
-    const allOk = results.every((res) => res.ok);
-    if (!allOk) {
-      const errors = await Promise.all(results.map((r) => r.json()));
-      throw new Error(errors.find((e) => !e.ok)?.description || "Telegram xatosi");
+  for (const chatId of chatIds) {
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text,
+          parse_mode: "HTML",
+        }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        successCount++;
+      } else {
+        errors.push(`ID ${chatId}: ${data.description || "xato"}`);
+      }
+    } catch (e) {
+      errors.push(`ID ${chatId}: ${e.message}`);
     }
-    return { ok: true };
-  } catch (err) {
-    console.error("Telegram xatosi:", err);
-    return { ok: false, error: err.message };
   }
+
+  if (successCount > 0) {
+    return { ok: true };
+  }
+
+  const msg = errors.length
+    ? `Chat not found. Har bir admin botga /start yuborgan bo'lishi kerak. ${errors.join("; ")}`
+    : "Telegram xatosi";
+  console.error("Telegram:", msg);
+  return { ok: false, error: msg };
 }

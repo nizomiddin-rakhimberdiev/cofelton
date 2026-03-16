@@ -2,23 +2,23 @@ import { useState, useMemo } from "react";
 import { useLanguage } from "../../i18n/LanguageContext";
 import styles from "./ProfitCalculator.module.css";
 
-const AVG_COFFEE_STATION_COST = 35000000; // so'm
+const AVG_COFFEE_STATION_COST = 55000000; // so'm
 
 function ProfitCalculator() {
   const { t } = useLanguage();
 
-  const [rent, setRent] = useState(5000000);
-  const [service, setService] = useState(2000000);
-  const [price, setPrice] = useState(12000);
-  const [cups, setCups] = useState(30);
+  const [rent, setRent] = useState(300000);
+  const [service, setService] = useState(0);
+  const [price, setPrice] = useState(20000);
+  const [cups, setCups] = useState(20);
   const [machines, setMachines] = useState(1);
 
   const ranges = {
-    rent: { min: 1000000, max: 15000000, step: 100000 },
-    service: { min: 1000000, max: 4000000, step: 100000 },
-    price: { min: 8000, max: 20000, step: 500 },
-    cups: { min: 10, max: 100, step: 1 },
-    machines: { min: 1, max: 5, step: 1 },
+    rent: { min: 0, max: 3000000, step: 50000 },
+    service: { min: 0, max: 1000000, step: 50000 },
+    price: { min: 10000, max: 40000, step: 500 },
+    cups: { min: 5, max: 100, step: 1 },
+    machines: { min: 1, max: 10, step: 1 },
   };
 
   const { monthlyProfit, yearlyProfit, paybackMonths } = useMemo(() => {
@@ -26,7 +26,7 @@ function ProfitCalculator() {
     const ingredientCost = revenue * 0.35;
     const profit = revenue - ingredientCost - rent - service;
     const yearly = profit * 12;
-    const payback = profit > 0 ? Math.ceil(AVG_COFFEE_STATION_COST / profit) : null;
+    const payback = profit > 0 ? Math.ceil(machines * AVG_COFFEE_STATION_COST / profit) : null;
     return { monthlyProfit: profit, yearlyProfit: yearly, paybackMonths: payback };
   }, [rent, service, price, cups, machines]);
 

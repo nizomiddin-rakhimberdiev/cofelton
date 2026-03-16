@@ -190,7 +190,7 @@ export const translations = {
     locationFormTitle: "Bu lokatsiyalardan o'zini oqlash muddati 9 oydan kam",
 
     // Calculator
-    calcTitle: "Daromad kalkulyatori",
+    calcTitle: "Taxminiy daromad kalkulyatori",
     calcRent: "Joy ijarasi",
     calcService: "Xizmat",
     calcSelfService: "O'zim xizmat qilaman",
