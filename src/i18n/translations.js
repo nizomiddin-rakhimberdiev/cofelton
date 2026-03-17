@@ -27,7 +27,12 @@ export const translations = {
     statsProduction: "собственное производство",
     statsCities: "города",
     statsCountries: "страны",
-    statsCountriesList: "(Узбекистан, Россия, Казахстан, Беларусь)",
+    statsCountriesList: "(Узбекистан, Россия)",
+    statsNum1: "16+",
+    statsNum2: "2",
+    statsNum3: "40 м²",
+    statsNum4: "5",
+    statsNum5: "2",
 
     // Guarantee
     guaranteeTitle: "НЕ СМОЖЕШЬ ЗАРАБОТАТЬ — ВЕРНЕМ ДЕНЬГИ",
@@ -47,10 +52,24 @@ export const translations = {
 
     // Coffee Catalog
     priceFrom: "Цена от",
+    priceUsd: "4500 y.e($)",
     deliveryLabel: "Срок отгрузки",
     deliveryDays: "от 10 дней",
     deliveryDays15: "от 15 дней",
     bonus: "Закажи сейчас и получи 5 кг кофе в подарок",
+    featMachine1: "Кофемашина Jetinno JL24/JL25",
+    featMachine2: "Кофемашина Jofemar Orion Touch G23",
+    featMachine3: "Кофемашина Jetinno JL30",
+    featStand: "Мебельная стойка",
+    featDispensers: "Два диспенсера",
+    featTerminal: "Терминал банковской оплаты",
+    featQR: "Оплата по QR-коду",
+    featCash: "Купюроприёмник",
+    featModem: "Модем телеметрии",
+    featFrame: "Металлический каркас",
+    featElectric: "Электрика",
+    featInsulation: "Утепление",
+    featLegs: "Регулируемые ножки",
 
     // Location
     locationTitle1: "Успех бизнеса на",
@@ -154,7 +173,12 @@ export const translations = {
     statsProduction: "o'z ishlab chiqarish",
     statsCities: "shahar",
     statsCountries: "mamlakat",
-    statsCountriesList: "(O'zbekiston, Rossiya, Qozog'iston, Belarus)",
+    statsCountriesList: "(O'zbekiston, Rossiya)",
+    statsNum1: "16+",
+    statsNum2: "2",
+    statsNum3: "40 m²",
+    statsNum4: "5",
+    statsNum5: "2",
 
     // Guarantee
     guaranteeTitle: "DAROMAD OLOLMASANG — PULNI QAYTARAMIZ",
@@ -174,10 +198,24 @@ export const translations = {
 
     // Coffee Catalog
     priceFrom: "Narxi",
+    priceUsd: "4500 y.e($)",
     deliveryLabel: "Yetkazib berish muddati",
     deliveryDays: "10 kundan",
     deliveryDays15: "15 kundan",
     bonus: "Hozir buyurtma bering — 5 kg kofe sovg'a oling",
+    featMachine1: "Kofe mashinasi Jetinno JL24/JL25",
+    featMachine2: "Kofe mashinasi Jofemar Orion Touch G23",
+    featMachine3: "Kofe mashinasi Jetinno JL30",
+    featStand: "Mebel stoykasi",
+    featDispensers: "Ikkita dispenser",
+    featTerminal: "Bank terminali",
+    featQR: "QR code orqali to'lov",
+    featCash: "Naqt pul qabul qilgich",
+    featModem: "Telemetriya modemi",
+    featFrame: "Metallik karkas",
+    featElectric: "Elektr ta'minot",
+    featInsulation: "Izolyatsiya",
+    featLegs: "Sozlanadigan oyoqchalar",
 
     // Location
     locationTitle1: "Biznes muvaffaqiyati",

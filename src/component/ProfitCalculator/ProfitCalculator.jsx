@@ -18,7 +18,7 @@ function ProfitCalculator() {
     service: { min: 0, max: 1000000, step: 50000 },
     price: { min: 10000, max: 40000, step: 500 },
     cups: { min: 5, max: 100, step: 1 },
-    machines: { min: 1, max: 10, step: 1 },
+    machines: { min: 1, max: 15, step: 1 },
   };
 
   const { monthlyProfit, yearlyProfit, paybackMonths } = useMemo(() => {

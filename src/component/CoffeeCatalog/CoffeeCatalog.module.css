@@ -24,6 +24,12 @@
   letter-spacing: -0.02em;
 }
 
+.usdPrice {
+  font-size: var(--text-base);
+  color: #666;
+  margin-bottom: 6px;
+}
+
 .price {
   font-size: clamp(1.75rem, 3vw, 2.75rem);
   color: #ff7a00;
@@ -36,13 +42,6 @@
   text-decoration: line-through;
   color: #555;
   margin-bottom: 12px;
-}
-
-.bonus {
-  margin-top: 12px;
-  font-size: var(--text-sm);
-  color: #ff7a00;
-  font-weight: 600;
 }
 
 .features {

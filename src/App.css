@@ -52,12 +52,6 @@ body {
   margin: 0 auto;
 }
 
-.coffe {
-  width: auto;
-  max-width: 100%;
-  height: auto;
-  object-fit: contain;
-}
 
 /* Touch targets - adequate tap area on mobile */
 @media (max-width: 768px) {

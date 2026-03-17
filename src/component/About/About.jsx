@@ -1,5 +1,4 @@
 import styles from "./About.module.css";
-import machine from "../../assets/machine1.png";
 import { useLanguage } from "../../i18n/LanguageContext";
 
 function About() {
@@ -19,42 +18,28 @@ function About() {
               <li>{t("aboutList3")}</li>
               <li>{t("aboutList4")}</li>
             </ul>
-            <div className={styles.founder}>
-              <p className={styles.founderName}>{t("aboutFounder")}</p>
-              <a
-                href="https://rutube.ru/channel/49981657/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.rutubeLink}
-              >
-                {t("aboutRutube")}
-              </a>
-            </div>
-          </div>
-          <div className={styles.right}>
-            <img src={machine} alt="Cofelton kofe apparati" />
           </div>
         </div>
 
         <div className={styles.stats}>
           <div className={styles.card}>
-            <h4>1000+</h4>
+            <h4>{t("statsNum1")}</h4>
             <p>{t("statsPartners")}</p>
           </div>
           <div className={styles.card}>
-            <h4>5</h4>
+            <h4>{t("statsNum2")}</h4>
             <p>{t("statsYears")}</p>
           </div>
-          <div className={styles.card}>
-            <h4>400 м²</h4>
+          {/* <div className={styles.card}>
+            <h4>{t("statsNum3")}</h4>
             <p>{t("statsProduction")}</p>
-          </div>
+          </div> */}
           <div className={styles.card}>
-            <h4>83</h4>
+            <h4>{t("statsNum4")}</h4>
             <p>{t("statsCities")}</p>
           </div>
           <div className={styles.card}>
-            <h4>4</h4>
+            <h4>{t("statsNum5")}</h4>
             <p>{t("statsCountries")} {t("statsCountriesList")}</p>
           </div>
         </div>

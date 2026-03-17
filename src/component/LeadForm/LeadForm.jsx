@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLanguage } from "../../i18n/LanguageContext";
 import { sendToTelegram } from "../../services/telegram";
+import { saveFormSubmission } from "../../lib/analytics";
 import styles from "./LeadForm.module.css";
 
 const FORM_TYPES = {
@@ -25,7 +26,9 @@ export default function LeadForm({ formType = "contract", buttonText, onSuccess,
     if (!policy) return;
 
     setStatus("sending");
-    const result = await sendToTelegram({ name: name.trim(), phone: phone.trim(), formType });
+    const formData = { name: name.trim(), phone: phone.trim(), formType };
+    saveFormSubmission(formData);
+    const result = await sendToTelegram(formData);
 
     if (result.ok) {
       setStatus("success");

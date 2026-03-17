@@ -2,33 +2,30 @@ import styles from "./ReviewsSection.module.css";
 import manager from "../../assets/manager.png";
 import { useLanguage } from "../../i18n/LanguageContext";
 import LeadForm, { FORM_TYPES } from "../LeadForm/LeadForm";
+import { useReviews } from "../../hooks/useReviews";
 
 export default function ReviewsSection() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const { reviews, loading } = useReviews();
 
-  const reviews = [
-    { name: t("review1Name"), meta: t("review1Meta"), city: t("review1City"), text: t("review1Text") },
-    { name: t("review2Name"), meta: t("review2Meta"), city: t("review2City"), text: t("review2Text") },
-    { name: t("review3Name"), meta: t("review3Meta"), city: t("review3City"), text: t("review3Text") },
-    { name: t("review4Name"), meta: t("review4Meta"), city: t("review4City"), text: t("review4Text") },
-    { name: t("review5Name"), meta: t("review5Meta"), city: t("review5City"), text: t("review5Text") },
-    { name: t("review6Name"), meta: t("review6Meta"), city: t("review6City"), text: t("review6Text") },
-  ];
+  const getText = (r) => (lang === "uz" ? r.text_uz : r.text_ru);
 
   const phoneNum = t("phone").replace(/\D/g, "");
   const phoneHref = "tel:+" + (phoneNum.startsWith("8") ? "7" + phoneNum.slice(1) : phoneNum);
+
+  if (loading) return <section className={styles.wrapper}><p>Yuklanmoqda...</p></section>;
 
   return (
     <section className={styles.wrapper}>
       <h2 className={styles.title}>{t("reviewsTitle")}</h2>
 
       <div className={styles.reviews}>
-        {reviews.map((r, i) => (
-          <div key={i} className={styles.card}>
+        {reviews.map((r) => (
+          <div key={r.id} className={styles.card}>
             <h4>{r.name}</h4>
-            <p className={styles.meta}>{r.meta}</p>
+            {r.age && <p className={styles.meta}>{r.age}</p>}
             <p className={styles.city}>{r.city}</p>
-            <p>{r.text}</p>
+            <p>{getText(r)}</p>
           </div>
         ))}
       </div>

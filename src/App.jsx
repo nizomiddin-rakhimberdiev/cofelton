@@ -1,7 +1,7 @@
-import { LanguageProvider } from "./i18n/LanguageContext";
+import { useEffect } from "react";
+import { trackPageView } from "./lib/analytics";
 import About from "./component/About/About";
 import Hero from "./component/Hero/Hero";
-import coffe from "./assets/coffe.png";
 import ProfitCalculator from "./component/ProfitCalculator/ProfitCalculator";
 import Guarantee from "./component/Guarantee/Guarantee";
 import CoffeeCatalog from "./component/CoffeeCatalog/CoffeeCatalog";
@@ -12,12 +12,14 @@ import Footer from "./component/Footer/Footer";
 import "./App.css";
 
 function App() {
+  useEffect(() => {
+    trackPageView();
+  }, []);
+
   return (
-    <LanguageProvider>
-      <div className="container">
+    <div className="container">
         <Hero />
         <About />
-        {/* <img src={coffe} className="coffe" alt="" /> */}
         <Guarantee />
         <CoffeeCatalog />
         <LocationSection />
@@ -26,7 +28,6 @@ function App() {
         <ReviewsSection />
         <Footer />
       </div>
-    </LanguageProvider>
   );
 }
 

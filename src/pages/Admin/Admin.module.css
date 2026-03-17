@@ -1,0 +1,340 @@
+.admin {
+  min-height: 100vh;
+  background: #0f0f12;
+  color: #e4e4e7;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: #18181b;
+  border-bottom: 1px solid #27272a;
+}
+
+.header h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.logoutBtn {
+  padding: 8px 16px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.logoutBtn:hover {
+  background: #dc2626;
+}
+
+/* Login */
+.loginPage {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f0f12 0%, #1a1a1f 100%);
+}
+
+.loginBox {
+  background: #18181b;
+  padding: 40px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #27272a;
+}
+
+.loginBox h1 {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.loginHint {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #71717a;
+  margin-bottom: 24px;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.loginForm input {
+  padding: 12px 16px;
+  border: 1px solid #3f3f46;
+  border-radius: 8px;
+  background: #27272a;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.loginForm input:focus {
+  outline: none;
+  border-color: #ff7a00;
+}
+
+.loginForm button {
+  padding: 14px;
+  background: #ff7a00;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.loginForm button:hover {
+  background: #ff9500;
+}
+
+.error {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* Dashboard */
+.dashboard {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.tabs button {
+  padding: 10px 20px;
+  background: #27272a;
+  border: 1px solid #3f3f46;
+  color: #a1a1aa;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.tabs button:hover {
+  background: #3f3f46;
+  color: #fff;
+}
+
+.tabActive {
+  background: #ff7a00 !important;
+  border-color: #ff7a00 !important;
+  color: white !important;
+}
+
+.content {
+  background: #18181b;
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid #27272a;
+}
+
+.section h2 {
+  font-size: 1.25rem;
+  margin-bottom: 20px;
+}
+
+.formCard {
+  background: #27272a;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.formCard h3 {
+  font-size: 1rem;
+  margin-bottom: 16px;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.formGrid input,
+.formGrid select,
+.formGrid textarea {
+  padding: 10px 14px;
+  border: 1px solid #3f3f46;
+  border-radius: 8px;
+  background: #18181b;
+  color: #fff;
+  font-size: 0.875rem;
+}
+
+.formGrid textarea {
+  grid-column: span 2;
+  resize: vertical;
+}
+
+.formActions {
+  display: flex;
+  gap: 12px;
+}
+
+.btnPrimary {
+  background: #ff7a00 !important;
+  color: white !important;
+  border: none !important;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btnPrimary:hover {
+  background: #ff9500 !important;
+}
+
+.btnDanger {
+  color: #ef4444 !important;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: #27272a;
+  border-radius: 8px;
+}
+
+.cardActions {
+  display: flex;
+  gap: 8px;
+}
+
+.cardActions button {
+  padding: 6px 12px;
+  background: #3f3f46;
+  border: none;
+  border-radius: 6px;
+  color: #a1a1aa;
+  cursor: pointer;
+  font-size: 0.8125rem;
+}
+
+.cardActions button:hover {
+  background: #52525b;
+  color: #fff;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #27272a;
+}
+
+.table th {
+  color: #71717a;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.statCard {
+  background: #27272a;
+  padding: 24px;
+  border-radius: 12px;
+}
+
+.statCard h3 {
+  font-size: 2rem;
+  color: #ff7a00;
+  margin-bottom: 4px;
+}
+
+.statCard p {
+  font-size: 0.875rem;
+  color: #71717a;
+  margin: 0;
+}
+
+.setupBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 20px;
+  margin-bottom: 20px;
+  background: #27272a;
+  border-radius: 8px;
+  font-size: 0.875rem;
+}
+
+.setupBanner a {
+  color: #ff7a00;
+  text-decoration: none;
+}
+
+.setupBanner a:hover {
+  text-decoration: underline;
+}
+
+.setupNotice {
+  padding: 40px;
+  text-align: center;
+}
+
+.setupNotice code {
+  display: block;
+  background: #27272a;
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin: 8px 0;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 640px) {
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .formGrid textarea {
+    grid-column: span 1;
+  }
+
+  .card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
