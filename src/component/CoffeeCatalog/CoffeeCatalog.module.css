@@ -25,9 +25,10 @@
 }
 
 .usdPrice {
-  font-size: var(--text-base);
-  color: #666;
-  margin-bottom: 6px;
+  font-size: clamp(1.125rem, 1.5vw, 1.5rem);
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 8px;
 }
 
 .price {
@@ -76,13 +77,15 @@
 }
 
 .delivery {
-  font-size: var(--text-base);
-  line-height: 1.5;
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
+  font-weight: 600;
+  line-height: 1.6;
 }
 
 .delivery span {
   color: #ff7a00;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: clamp(1.125rem, 1.5vw, 1.375rem);
 }
 
 .button {

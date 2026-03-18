@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { supabase, isSupabaseConfigured } from "../../lib/supabase";
 import { getLocalProducts, setLocalProducts, getLocalReviews, setLocalReviews } from "../../lib/storage";
+import { uploadProductImage } from "../../lib/upload";
 import styles from "./Admin.module.css";
 
 const DEFAULT_PRODUCTS = [
@@ -122,10 +123,33 @@ export default function AdminDashboard({ cities }) {
 
 function ProductsSection({ products, onUpdate, useDb }) {
   const [editing, setEditing] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
+  const fileInputRef = useRef(null);
   const [form, setForm] = useState({
     name_ru: "", name_uz: "", price_usd: "", price_som: "",
     features_ru: "", features_uz: "", delivery_days: "", image_url: "",
   });
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file || !useDb || !supabase) return;
+    if (!file.type.startsWith("image/")) {
+      setUploadError("Faqat rasm fayllari (jpg, png, webp, gif)");
+      return;
+    }
+    setUploadError("");
+    setUploading(true);
+    try {
+      const url = await uploadProductImage(file);
+      setForm((f) => ({ ...f, image_url: url }));
+    } catch (err) {
+      setUploadError(err?.message || "Yuklash xatosi");
+    } finally {
+      setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
 
   const saveProduct = async () => {
     const data = {
@@ -185,7 +209,32 @@ function ProductsSection({ products, onUpdate, useDb }) {
           <input placeholder="Narx (USD)" value={form.price_usd} onChange={(e) => setForm({ ...form, price_usd: e.target.value })} />
           <input placeholder="Narx (so'm)" value={form.price_som} onChange={(e) => setForm({ ...form, price_som: e.target.value })} />
           <input placeholder="Yetkazib berish" value={form.delivery_days} onChange={(e) => setForm({ ...form, delivery_days: e.target.value })} />
-          <input placeholder="Rasm URL" value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} />
+          <div className={styles.imageUpload}>
+            <label>Rasm</label>
+            {useDb && supabase && (
+              <div className={styles.uploadRow}>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/gif"
+                  onChange={handleImageUpload}
+                  disabled={uploading}
+                  className={styles.fileInput}
+                  style={{ display: "none" }}
+                />
+                <button type="button" onClick={() => fileInputRef.current?.click()} disabled={uploading} className={styles.uploadBtn}>
+                  {uploading ? "Yuklanmoqda..." : "Rasm yuklash"}
+                </button>
+              </div>
+            )}
+            <input placeholder="Yoki rasm URL kiriting" value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} />
+            {form.image_url && (
+              <div className={styles.imagePreview}>
+                <img src={form.image_url} alt="Preview" onError={(e) => (e.target.style.display = "none")} />
+              </div>
+            )}
+            {uploadError && <p className={styles.uploadError}>{uploadError}</p>}
+          </div>
           <textarea placeholder="Izohlar (RU) - qatorlarda" value={form.features_ru} onChange={(e) => setForm({ ...form, features_ru: e.target.value })} rows={4} />
           <textarea placeholder="Izohlar (UZ) - qatorlarda" value={form.features_uz} onChange={(e) => setForm({ ...form, features_uz: e.target.value })} rows={4} />
         </div>
@@ -197,6 +246,7 @@ function ProductsSection({ products, onUpdate, useDb }) {
       <div className={styles.list}>
         {products.map((p) => (
           <div key={p.id} className={styles.card}>
+            {p.image_url && <img src={p.image_url} alt="" className={styles.cardThumb} />}
             <div>
               <strong>{p.name_uz}</strong>
               <p>{p.price_som} so'm</p>

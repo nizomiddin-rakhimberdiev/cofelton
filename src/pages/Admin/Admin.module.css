@@ -184,6 +184,61 @@
   resize: vertical;
 }
 
+.imageUpload {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.imageUpload label {
+  font-size: 0.875rem;
+  color: #a1a1aa;
+}
+
+.uploadRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.uploadBtn {
+  padding: 8px 16px;
+  background: #3f3f46;
+  color: #fff;
+  border: 1px solid #52525b;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.uploadBtn:hover:not(:disabled) {
+  background: #52525b;
+}
+
+.uploadBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.imagePreview {
+  margin-top: 8px;
+}
+
+.imagePreview img {
+  max-width: 200px;
+  max-height: 150px;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid #3f3f46;
+}
+
+.uploadError {
+  color: #ef4444;
+  font-size: 0.8125rem;
+  margin: 0;
+}
+
 .formActions {
   display: flex;
   gap: 12px;
@@ -216,9 +271,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
   padding: 16px;
   background: #27272a;
   border-radius: 8px;
+}
+
+.cardThumb {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
 }
 
 .cardActions {

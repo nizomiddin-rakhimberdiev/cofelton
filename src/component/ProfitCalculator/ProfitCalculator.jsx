@@ -22,7 +22,7 @@ function ProfitCalculator() {
   };
 
   const { monthlyProfit, yearlyProfit, paybackMonths } = useMemo(() => {
-    const revenue = price * cups * 30 * machines;
+    const revenue = price * (cups - cups * 0.05) * 30 * machines;
     const ingredientCost = revenue * 0.35;
     const profit = revenue - ingredientCost - rent - service;
     const yearly = profit * 12;

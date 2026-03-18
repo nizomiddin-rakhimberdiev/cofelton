@@ -17,6 +17,11 @@ function CoffeeCatalog() {
 
   const getFeatures = (p) => (lang === "uz" ? (p.features_uz || []) : (p.features_ru || []));
   const getName = (p) => (lang === "uz" ? p.name_uz : p.name_ru);
+  const getDeliveryText = (p) => {
+    const raw = p.delivery_days || t("deliveryDays");
+    const num = raw.match(/\d+/)?.[0];
+    return num ? `${num} oy` : raw;
+  };
 
   if (loading) return <div className={styles.catalog}><p>Yuklanmoqda...</p></div>;
 
@@ -26,8 +31,15 @@ function CoffeeCatalog() {
         <div key={machine.id} className={styles.card}>
           <div className={styles.left}>
             <p className={styles.title}>{t("priceFrom")}</p>
-            {machine.price_usd && <p className={styles.usdPrice}>{machine.price_usd}</p>}
-            <h2 className={styles.price}>{machine.price_som}</h2>
+            {machine.price_usd && (
+              <p className={styles.usdPrice}>
+                ${String(machine.price_usd).replace(/[^0-9]/g, "")}
+              </p>
+            )}
+            <h2 className={styles.price}>
+              {machine.price_som}
+              {machine.price_som && !/so['']m$/i.test(String(machine.price_som)) ? " so'm" : ""}
+            </h2>
             <div className={styles.features}>
               {getFeatures(machine).map((f, i) => (
                 <div key={i} className={styles.feature}>
@@ -47,7 +59,7 @@ function CoffeeCatalog() {
           <div className={styles.right}>
             <p className={styles.delivery}>
               {t("deliveryLabel")} <br />
-              <span>{machine.delivery_days || t("deliveryDays")}</span>
+              <span>{getDeliveryText(machine)}</span>
             </p>
             <button className={styles.button} onClick={scrollToForm}>
               {t("buyCoffee")}

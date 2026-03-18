@@ -13,7 +13,7 @@ export const translations = {
     phone: "+998 90 123 45 67",
 
     // About
-    aboutTitle: "Бизнес Кофе с собой – это простой первый шаг к предпринимательству",
+    aboutTitle: "Франшиза кофейного бизнеса – это простой первый шаг к предпринимательству",
     aboutDesc: "Мы создаем принципиально новый продукт вендинга. Его главное отличие – кофе хорошего качества там, где с нами не сможет конкурировать кофейня с баристой.",
     aboutListTitle: "У нас вы получите:",
     aboutList1: "Самые удобные кофестойки",
@@ -159,7 +159,7 @@ export const translations = {
     phone: "+998 90 123 45 67",
 
     // About
-    aboutTitle: "Kofe s o'soy biznesi — tadbirkorlikka oddiy birinchi qadam",
+    aboutTitle: "Kofe biznesi franshizasi — tadbirkorlikka oddiy birinchi qadam",
     aboutDesc: "Biz vending sohasida yangi mahsulot yaratamiz. Asosiy farqi — barista bo'lgan kofexona bilan raqobatlasha olmaydigan joylarda yaxshi sifatli kofe.",
     aboutListTitle: "Siz olasiz:",
     aboutList1: "Eng qulay kofe stoykalari",
@@ -267,7 +267,7 @@ export const translations = {
     review6City: "Qarshi",
     review6Text: "Menejer Marat orqali stoyka buyurtma qildim. Hammasini tushuntirdi, har narsada yordam berdi. Tavsiya qilaman!",
     managerTitle: "Menejerimiz",
-    managerName: "Marat",
+    managerName: "Sulton",
     managerSubtitle: "sizga biznes yaratish haqida batafsil ma'lumot beradi",
     managerBrand: "Cofelton",
     contactsTitle: "Kontaktlar",

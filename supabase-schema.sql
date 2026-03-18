@@ -70,3 +70,14 @@ CREATE POLICY "Public all products" ON products FOR ALL USING (true) WITH CHECK 
 CREATE POLICY "Public all reviews" ON reviews FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "Public read form_submissions" ON form_submissions FOR SELECT USING (true);
 CREATE POLICY "Public read page_views" ON page_views FOR SELECT USING (true);
+
+-- Storage: maxsulot rasmlari uchun bucket (5MB limit)
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('products', 'products', true)
+ON CONFLICT (id) DO NOTHING;
+
+-- Storage: barcha o'qish va yozish (anon key - productionda auth qo'shing)
+CREATE POLICY "Public read products images" ON storage.objects FOR SELECT USING (bucket_id = 'products');
+CREATE POLICY "Public upload products images" ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'products');
+CREATE POLICY "Public update products images" ON storage.objects FOR UPDATE USING (bucket_id = 'products');
+CREATE POLICY "Public delete products images" ON storage.objects FOR DELETE USING (bucket_id = 'products');
