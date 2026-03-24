@@ -5,17 +5,12 @@ import { uploadProductImage } from "../../lib/upload";
 import styles from "./Admin.module.css";
 
 const DEFAULT_PRODUCTS = [
-  { id: "1", name_ru: "Кофемашина Jetinno JL24/JL25", name_uz: "Kofe mashinasi Jetinno JL24/JL25", price_usd: "4500 y.e($)", price_som: "54 500 000 so'm", features_ru: ["Кофемашина Jetinno JL24/JL25", "Мебельная стойка", "Два диспенсера", "Оплата по QR-коду", "Купюроприёмник"], features_uz: ["Kofe mashinasi Jetinno JL24/JL25", "Mebel stoykasi", "Ikkita dispenser", "QR code orqali to'lov", "Naqt pul qabul qilgich"], delivery_days: "10 kundan", image_url: null, sort_order: 0 },
-  { id: "2", name_ru: "Металлический каркас", name_uz: "Metallik karkas", price_usd: null, price_som: "33 584 000 so'm", features_ru: ["Металлический каркас", "Электрика", "Утепление", "Регулируемые ножки", "Модем телеметрии"], features_uz: ["Metallik karkas", "Elektr ta'minot", "Izolyatsiya", "Sozlanadigan oyoqchalar", "Telemetriya modemi"], delivery_days: "15 kundan", image_url: null, sort_order: 1 },
+  { id: "1", name_ru: "Кофемашина Jetinno JL24/JL25", name_uz: "Kofe mashinasi Jetinno JL24/JL25", price_som: "54 500 000 so'm", promo_until: "2025-03-31", features_ru: ["Кофемашина Jetinno JL24/JL25", "Мебельная стойка", "Два диспенсера", "Оплата по QR-коду", "Купюроприёмник"], features_uz: ["Kofe mashinasi Jetinno JL24/JL25", "Mebel stoykasi", "Ikkita dispenser", "QR code orqali to'lov", "Naqt pul qabul qilgich"], delivery_days: "10", image_url: null, sort_order: 0 },
+  { id: "2", name_ru: "Металлический каркас", name_uz: "Metallik karkas", price_som: "33 584 000 so'm", promo_until: null, features_ru: ["Металлический каркас", "Электрика", "Утепление", "Регулируемые ножки", "Модем телеметрии"], features_uz: ["Metallik karkas", "Elektr ta'minot", "Izolyatsiya", "Sozlanadigan oyoqchalar", "Telemetriya modemi"], delivery_days: "15", image_url: null, sort_order: 1 },
 ];
 
 const DEFAULT_REVIEWS = [
-  { id: "1", name: "Jasur Rahimov", age: "31 yosh, murabbiy", city: "Toshkent", text_ru: "Лучшее предложение...", text_uz: "Narx-sifat nisbati bo'yicha eng yaxshi taklif..." },
-  { id: "2", name: "Dilshod Karimov", age: "28 yosh, tadbirkor", city: "Samarqand", text_ru: "Дизайн очень хороший...", text_uz: "Dizayn juda yaxshi..." },
-  { id: "3", name: "Aziz Toshmatov", age: "26 yosh", city: "Buxoro", text_ru: "Все напитки...", text_uz: "Barcha ichimliklar..." },
-  { id: "4", name: "Otabek Yusupov", age: "35 yosh, tadbirkor", city: "Farg'ona", text_ru: "Выглядит красиво...", text_uz: "Juda chiroyli ko'rinadi..." },
-  { id: "5", name: "Sardor Nazarov", age: "30 yosh, quruvchi", city: "Andijon", text_ru: "Купил готовую точку...", text_uz: "Omadim yaxshi edi..." },
-  { id: "6", name: "Shoxruh Ismoilov", age: "33 yosh", city: "Qarshi", text_ru: "Заказал стойку...", text_uz: "Menejer Marat orqali stoyka buyurtma qildim..." },
+  { id: "1", name: "Jasur Rahimov", age: "31 yosh", profession: "murabbiy", city: "Toshkent", text_ru: "Лучшее предложение...", text_uz: "Narx-sifat nisbati bo'yicha eng yaxshi taklif...", youtube_url: "", avatar_url: "" },
 ];
 
 export default function AdminDashboard({ cities }) {
@@ -127,8 +122,8 @@ function ProductsSection({ products, onUpdate, useDb }) {
   const [uploadError, setUploadError] = useState("");
   const fileInputRef = useRef(null);
   const [form, setForm] = useState({
-    name_ru: "", name_uz: "", price_usd: "", price_som: "",
-    features_ru: "", features_uz: "", delivery_days: "", image_url: "",
+    name_ru: "", name_uz: "", price_som: "",
+    features_ru: "", features_uz: "", delivery_days: "", image_url: "", promo_until: "",
   });
 
   const handleImageUpload = async (e) => {
@@ -153,9 +148,14 @@ function ProductsSection({ products, onUpdate, useDb }) {
 
   const saveProduct = async () => {
     const data = {
-      ...form,
+      name_ru: form.name_ru || "Yangi maxsulot",
+      name_uz: form.name_uz || "Yangi maxsulot",
+      price_som: form.price_som,
+      promo_until: form.promo_until || null,
       features_ru: form.features_ru.split("\n").filter(Boolean),
       features_uz: form.features_uz.split("\n").filter(Boolean),
+      delivery_days: form.delivery_days,
+      image_url: form.image_url || null,
       sort_order: editing ? products.find((p) => p.id === editing.id)?.sort_order ?? products.length : products.length,
     };
     if (useDb && supabase) {
@@ -175,7 +175,7 @@ function ProductsSection({ products, onUpdate, useDb }) {
       setLocalProducts(list);
     }
     setEditing(null);
-    setForm({ name_ru: "", name_uz: "", price_usd: "", price_som: "", features_ru: "", features_uz: "", delivery_days: "", image_url: "" });
+    setForm({ name_ru: "", name_uz: "", price_som: "", features_ru: "", features_uz: "", delivery_days: "", image_url: "", promo_until: "" });
     onUpdate();
   };
 
@@ -191,10 +191,13 @@ function ProductsSection({ products, onUpdate, useDb }) {
 
   const editProduct = (p) => {
     setEditing(p);
+    const rawPromo = p.promo_until ?? p.promo_date;
+    const promoIso =
+      rawPromo && /^\d{4}-\d{2}-\d{2}/.test(String(rawPromo)) ? String(rawPromo).slice(0, 10) : "";
     setForm({
-      name_ru: p.name_ru, name_uz: p.name_uz, price_usd: p.price_usd || "", price_som: p.price_som,
+      name_ru: p.name_ru, name_uz: p.name_uz, price_som: p.price_som,
       features_ru: (p.features_ru || []).join("\n"), features_uz: (p.features_uz || []).join("\n"),
-      delivery_days: p.delivery_days || "", image_url: p.image_url || "",
+      delivery_days: p.delivery_days || "", image_url: p.image_url || "", promo_until: promoIso,
     });
   };
 
@@ -204,11 +207,22 @@ function ProductsSection({ products, onUpdate, useDb }) {
       <div className={styles.formCard}>
         <h3>{editing ? "Tahrirlash" : "Yangi maxsulot"}</h3>
         <div className={styles.formGrid}>
-          <input placeholder="Nomi (RU)" value={form.name_ru} onChange={(e) => setForm({ ...form, name_ru: e.target.value })} />
-          <input placeholder="Nomi (UZ)" value={form.name_uz} onChange={(e) => setForm({ ...form, name_uz: e.target.value })} />
-          <input placeholder="Narx (USD)" value={form.price_usd} onChange={(e) => setForm({ ...form, price_usd: e.target.value })} />
           <input placeholder="Narx (so'm)" value={form.price_som} onChange={(e) => setForm({ ...form, price_som: e.target.value })} />
-          <input placeholder="Yetkazib berish" value={form.delivery_days} onChange={(e) => setForm({ ...form, delivery_days: e.target.value })} />
+          <label className={styles.dateField}>
+            <span>Aksiya tugash sanasi</span>
+            <input
+              type="date"
+              value={form.promo_until}
+              onChange={(e) => setForm({ ...form, promo_until: e.target.value })}
+              className={styles.dateInput}
+            />
+            {form.promo_until && (
+              <button type="button" className={styles.clearDate} onClick={() => setForm({ ...form, promo_until: "" })}>
+                Tozalash
+              </button>
+            )}
+          </label>
+          <input placeholder="Yetkazib berish (kun)" value={form.delivery_days} onChange={(e) => setForm({ ...form, delivery_days: e.target.value })} />
           <div className={styles.imageUpload}>
             <label>Rasm</label>
             {useDb && supabase && (
@@ -264,7 +278,7 @@ function ProductsSection({ products, onUpdate, useDb }) {
 
 function ReviewsSection({ reviews, cities, onUpdate, useDb }) {
   const [editing, setEditing] = useState(null);
-  const [form, setForm] = useState({ name: "", age: "", city: cities[0] || "", text_ru: "", text_uz: "" });
+  const [form, setForm] = useState({ name: "", age: "", profession: "", city: cities[0] || "", text_ru: "", text_uz: "", youtube_url: "", avatar_url: "" });
 
   const saveReview = async () => {
     if (useDb && supabase) {
@@ -284,7 +298,7 @@ function ReviewsSection({ reviews, cities, onUpdate, useDb }) {
       setLocalReviews(list);
     }
     setEditing(null);
-    setForm({ name: "", age: "", city: cities[0] || "", text_ru: "", text_uz: "" });
+    setForm({ name: "", age: "", profession: "", city: cities[0] || "", text_ru: "", text_uz: "", youtube_url: "", avatar_url: "" });
     onUpdate();
   };
 
@@ -300,7 +314,7 @@ function ReviewsSection({ reviews, cities, onUpdate, useDb }) {
 
   const editReview = (r) => {
     setEditing(r);
-    setForm({ name: r.name, age: r.age || "", city: r.city, text_ru: r.text_ru, text_uz: r.text_uz });
+    setForm({ name: r.name, age: r.age || "", profession: r.profession || "", city: r.city, text_ru: r.text_ru, text_uz: r.text_uz, youtube_url: r.youtube_url || "", avatar_url: r.avatar_url || "" });
   };
 
   return (
@@ -311,9 +325,12 @@ function ReviewsSection({ reviews, cities, onUpdate, useDb }) {
         <div className={styles.formGrid}>
           <input placeholder="Ism" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
           <input placeholder="Yosh" value={form.age} onChange={(e) => setForm({ ...form, age: e.target.value })} />
+          <input placeholder="Kasbi" value={form.profession} onChange={(e) => setForm({ ...form, profession: e.target.value })} />
           <select value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })}>
             {cities.map((c) => <option key={c} value={c}>{c}</option>)}
           </select>
+          <input placeholder="YouTube video linki" value={form.youtube_url} onChange={(e) => setForm({ ...form, youtube_url: e.target.value })} />
+          <input placeholder="Avatar rasm URL" value={form.avatar_url} onChange={(e) => setForm({ ...form, avatar_url: e.target.value })} />
           <textarea placeholder="Izoh (RU)" value={form.text_ru} onChange={(e) => setForm({ ...form, text_ru: e.target.value })} rows={3} />
           <textarea placeholder="Izoh (UZ)" value={form.text_uz} onChange={(e) => setForm({ ...form, text_uz: e.target.value })} rows={3} />
         </div>

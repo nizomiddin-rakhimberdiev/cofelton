@@ -1,27 +1,18 @@
 import { supabase, isSupabaseConfigured } from "./supabase";
 
-async function getLocation() {
-  try {
-    const c = new AbortController();
-    const t = setTimeout(() => c.abort(), 3000);
-    const r = await fetch("https://ipapi.co/json/", { signal: c.signal });
-    clearTimeout(t);
-    const d = await r.json();
-    return { country: d.country_name || null, city: d.city || null };
-  } catch {
-    return { country: null, city: null };
-  }
-}
-
+/**
+ * Tashrif joylashuvi: brauzerdan tashqi geo-API (masalan ipapi.co) CORS sabab
+ * localhost va ko‘p domenlarda ishlamaydi va konsolni ifloslaydi.
+ * Mamlakat/shahar keyinroq server yoki Supabase Edge Function orqali qo‘shish mumkin.
+ */
 export async function trackPageView() {
   if (!isSupabaseConfigured() || !supabase) return;
   try {
-    const { country, city } = await getLocation();
     await supabase.from("page_views").insert({
       referrer: document.referrer || null,
       path: window.location.pathname,
-      country,
-      city,
+      country: null,
+      city: null,
       user_agent: navigator.userAgent?.slice(0, 500) || null,
     });
   } catch (e) {

@@ -30,14 +30,14 @@ export default function LocationSection() {
         </div>
       </div>
 
-      <div className={styles.orange}>{t("locationOrange")}</div>
+      {/* <div className={styles.orange}>{t("locationOrange")}</div>
 
       <div className={styles.formBox}>
         <h3>{t("locationFormTitle")}</h3>
         <button className={styles.ctaButton} onClick={scrollToForm}>
           {t("getLocations")}
         </button>
-      </div>
+      </div> */}
     </section>
   );
 }

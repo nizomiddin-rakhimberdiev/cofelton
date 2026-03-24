@@ -7,8 +7,8 @@ CREATE TABLE IF NOT EXISTS products (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   name_ru TEXT NOT NULL,
   name_uz TEXT NOT NULL,
-  price_usd TEXT,
   price_som TEXT NOT NULL,
+  promo_until DATE,
   features_ru TEXT[] DEFAULT '{}',
   features_uz TEXT[] DEFAULT '{}',
   image_url TEXT,
@@ -17,17 +17,26 @@ CREATE TABLE IF NOT EXISTS products (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- Migration: ALTER TABLE products ADD COLUMN IF NOT EXISTS promo_until DATE;
+
 -- Reviews
 CREATE TABLE IF NOT EXISTS reviews (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL,
   age TEXT,
+  profession TEXT,
   city TEXT NOT NULL,
   text_ru TEXT NOT NULL,
   text_uz TEXT NOT NULL,
+  youtube_url TEXT,
+  avatar_url TEXT,
   sort_order INT DEFAULT 0,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- ALTER TABLE reviews ADD COLUMN IF NOT EXISTS profession TEXT;
+-- ALTER TABLE reviews ADD COLUMN IF NOT EXISTS youtube_url TEXT;
+-- ALTER TABLE reviews ADD COLUMN IF NOT EXISTS avatar_url TEXT;
 
 -- Form submissions
 CREATE TABLE IF NOT EXISTS form_submissions (

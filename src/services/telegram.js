@@ -20,7 +20,7 @@ export async function sendToTelegram(formData) {
     .map((id) => id.trim())
     .filter(Boolean);
 
-  const { name, phone, formType } = formData;
+  const { name, phone, formType, commercialProposal } = formData;
   const typeLabels = {
     contract: "📄 Получить договор / Shartnoma olish",
     locations: "📍 Получить подборку / Lokatsiyalar",
@@ -29,12 +29,14 @@ export async function sendToTelegram(formData) {
   };
   const typeLabel = typeLabels[formType] || formType;
 
+  const commercialLine = commercialProposal ? "\n📋 Tijoriy taklif so'ragan" : "";
   const text = [
     `🆕 <b>Yangi ariza</b>`,
     ``,
     `📌 Turi: ${typeLabel}`,
     `👤 Ism: ${name}`,
     `📞 Telefon: ${phone}`,
+    commercialLine,
     ``,
     `⏰ ${new Date().toLocaleString("ru-RU")}`,
   ].join("\n");

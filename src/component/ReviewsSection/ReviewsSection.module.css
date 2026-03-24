@@ -1,64 +1,201 @@
 .wrapper {
-  background: #e8e8e8;
-  padding: 64px 20px;
+  background: #ffffff;
+  padding: 72px 20px 64px;
+}
+
+.loading {
+  text-align: center;
+  color: #6b7280;
+  margin: 0;
 }
 
 .title {
   text-align: center;
-  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-size: clamp(1.5rem, 3vw, 2.125rem);
   font-weight: 800;
-  margin-bottom: 40px;
-  letter-spacing: -0.02em;
+  color: #111827;
+  margin: 0 0 12px;
+  letter-spacing: -0.03em;
 }
 
-.reviews {
-  max-width: 1200px;
-  margin: 0 auto 64px auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 24px;
+.titleAccent {
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 10px solid #d1d5db;
+  margin: 0 auto 36px;
+  opacity: 0.85;
+}
+
+.carouselWrap {
+  display: flex;
+  align-items: center;
   justify-content: center;
+  gap: 20px;
+  max-width: 560px;
+  margin: 0 auto 72px;
+}
+
+.carouselViewport {
+  flex: 1;
+  min-width: 0;
+  max-width: 420px;
+}
+
+.carousel {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 36px 8px 16px;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.carouselArrow {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border: none;
+  background: #fff;
+  border-radius: 50%;
+  color: #9ca3af;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: color 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+
+.carouselArrow:hover:not(:disabled) {
+  color: #374151;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.carouselArrow:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
 
 .card {
-  background: white;
-  padding: 24px 20px;
-  border-radius: 12px;
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  position: relative;
+  background: #fff;
+  border: 4px solid #ff7a00;
+  border-radius: 24px;
   min-width: 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s, box-shadow 0.2s;
+  min-height: 200px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+  padding: 28px 26px 26px 26px;
+  padding-top: 52px;
 }
 
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+.avatarWrap {
+  position: absolute;
+  top: -40px;
+  left: 22px;
+  z-index: 2;
 }
 
-.card h4 {
-  font-size: var(--text-lg);
-  font-weight: 700;
-  margin-bottom: 6px;
+.avatarLink {
+  text-decoration: none;
+  display: block;
+}
+
+.avatar {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(145deg, #e5e7eb, #d1d5db);
+  border: 4px solid #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.avatarFallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #6b7280;
+  background: linear-gradient(145deg, #f3f4f6, #e5e7eb);
+}
+
+.playBadge {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(220, 38, 38, 0.82);
+  border-radius: 50%;
+}
+
+.playBadge svg {
+  margin-left: 3px;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.2));
+}
+
+.cardBody {
+  padding-left: 8px;
+}
+
+.cardMeta {
+  margin-bottom: 18px;
+}
+
+.reviewerName {
+  font-size: 1.0625rem;
+  font-weight: 800;
+  color: #111827;
+  margin: 0 0 6px;
   line-height: 1.3;
 }
 
-.meta {
-  font-size: var(--text-xs);
-  color: #666;
-  margin-bottom: 4px;
+.reviewerJob {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 6px;
+  line-height: 1.4;
 }
 
 .city {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 700;
   color: #ff7a00;
-  margin-bottom: 12px;
-  font-weight: 600;
-  font-size: var(--text-sm);
+  line-height: 1.4;
 }
 
-.card p:last-child {
-  font-size: var(--text-sm);
-  line-height: 1.55;
-  color: #444;
+.reviewText {
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #374151;
   margin: 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
 }
 
 .managerSection {
@@ -87,40 +224,22 @@
   color: #ff7a00;
 }
 
-.form {
-  margin-top: 28px;
-  background: #2f2f2f;
-  padding: 28px 24px;
+.ctaBtn {
+  margin-top: 20px;
+  padding: 16px 32px;
   border-radius: 12px;
-  max-width: 400px;
-  width: 100%;
-}
-
-.form input {
-  width: 100%;
-  padding: 16px;
-  margin-bottom: 14px;
   border: none;
-  border-radius: 10px;
-  font-size: var(--text-base);
-}
-
-.form button {
-  width: 100%;
-  padding: 16px;
-  border: none;
-  border-radius: 10px;
-  font-size: var(--text-base);
-  color: white;
-  cursor: pointer;
   background: linear-gradient(90deg, #3b82f6, #2563eb);
+  color: #fff;
+  font-size: var(--text-base);
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.policy {
-  font-size: var(--text-xs);
-  color: #ccc;
-  margin-top: 12px;
-  line-height: 1.4;
+.ctaBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
 }
 
 .managerImg {
@@ -165,7 +284,6 @@
   color: #ff7a00;
 }
 
-/* Tablet */
 @media (max-width: 1024px) {
   .managerSection {
     flex-direction: column;
@@ -179,45 +297,46 @@
   .managerImg {
     max-height: 320px;
   }
-
-  .form {
-    max-width: 420px;
-    margin: 28px auto 0;
-  }
 }
 
-/* Mobile */
 @media (max-width: 600px) {
   .wrapper {
-    padding: 48px 16px;
+    padding: 48px 16px 56px;
   }
 
   .title {
     font-size: 1.375rem;
-    margin-bottom: 32px;
   }
 
-  .reviews {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    margin-bottom: 48px;
+  .carouselWrap {
+    gap: 10px;
+    margin-bottom: 56px;
+  }
+
+  .carouselArrow {
+    width: 42px;
+    height: 42px;
+  }
+
+  .carouselViewport {
+    max-width: none;
+    flex: 1;
   }
 
   .card {
-    padding: 20px 18px;
+    padding: 24px 20px 22px;
+    padding-top: 48px;
+    border-radius: 20px;
   }
 
-  .managerInfo h3 {
-    font-size: 1.25rem;
+  .avatar {
+    width: 80px;
+    height: 80px;
   }
 
-  .form {
-    padding: 24px 20px;
-  }
-
-  .form input,
-  .form button {
-    font-size: var(--text-base);
+  .avatarWrap {
+    top: -34px;
+    left: 16px;
   }
 
   .contacts {
@@ -226,12 +345,5 @@
 
   .phone {
     font-size: 1.125rem;
-  }
-}
-
-/* Small phones */
-@media (max-width: 380px) {
-  .reviews {
-    grid-template-columns: 1fr;
   }
 }
