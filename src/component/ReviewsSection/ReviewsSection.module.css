@@ -274,14 +274,17 @@
   text-decoration: underline;
 }
 
-.email {
-  font-size: var(--text-base);
-  color: #555;
+.telegram {
+  font-size: clamp(1rem, 1.35vw, 1.25rem);
+  color: #ff7a00;
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: block;
   text-decoration: none;
 }
 
-.email:hover {
-  color: #ff7a00;
+.telegram:hover {
+  text-decoration: underline;
 }
 
 @media (max-width: 1024px) {

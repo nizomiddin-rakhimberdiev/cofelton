@@ -157,10 +157,7 @@ export default function ReviewsSection() {
 
       <div className={styles.managerSection}>
         <div className={styles.managerInfo}>
-          <h3>
-            {t("managerTitle")} <span>{t("managerName")}</span> {t("managerSubtitle")}{" "}
-            <span>{t("managerBrand")}</span>
-          </h3>
+          <h3>{t("managerHeadline")}</h3>
           <button type="button" className={styles.ctaBtn} onClick={() => openModal("businessPlan")}>
             {t("getBusinessPlan")}
           </button>
@@ -173,8 +170,13 @@ export default function ReviewsSection() {
         <a href={phoneHref} className={styles.phone}>
           {t("phone")}
         </a>
-        <a href={`mailto:${t("email")}`} className={styles.email}>
-          {t("email")}
+        <a
+          href="https://t.me/sultoncofelton"
+          className={styles.telegram}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {t("telegramAccount")}
         </a>
       </div>
     </section>
