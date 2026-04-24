@@ -94,8 +94,6 @@ export default function ReviewsSection() {
     };
   }, [reviews.length]);
 
-  if (loading) return <section className={styles.wrapper}><p className={styles.loading}>Yuklanmoqda...</p></section>;
-
   const atStart = currentIndex <= 0;
   const atEnd = currentIndex >= reviews.length - 1;
 
@@ -104,56 +102,60 @@ export default function ReviewsSection() {
       <h2 className={styles.title}>{t("reviewsTitle")}</h2>
       <div className={styles.titleAccent} aria-hidden="true" />
 
-      <div className={styles.carouselWrap}>
-        <button
-          type="button"
-          className={styles.carouselArrow}
-          onClick={prev}
-          disabled={atStart}
-          aria-label="Oldingi"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M15 18l-6-6 6-6" />
-          </svg>
-        </button>
+      {loading ? (
+        <p className={styles.loading}>Yuklanmoqda...</p>
+      ) : (
+        <div className={styles.carouselWrap}>
+          <button
+            type="button"
+            className={styles.carouselArrow}
+            onClick={prev}
+            disabled={atStart}
+            aria-label="Oldingi"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
 
-        <div className={styles.carouselViewport}>
-          <div className={styles.carousel} ref={scrollRef}>
-            {reviews.map((r) => (
-              <article key={r.id} className={styles.card}>
-                <div className={styles.avatarWrap}>
-                  <ReviewCardAvatar name={r.name} avatarUrl={r.avatar_url} youtubeUrl={r.youtube_url} />
-                </div>
-
-                <div className={styles.cardBody}>
-                  <div className={styles.cardMeta}>
-                    <h4 className={styles.reviewerName}>{r.name}</h4>
-                    {(r.age || r.profession) && (
-                      <p className={styles.reviewerJob}>
-                        {[r.age, r.profession].filter(Boolean).join(", ")}
-                      </p>
-                    )}
-                    <p className={styles.city}>{r.city}</p>
+          <div className={styles.carouselViewport}>
+            <div className={styles.carousel} ref={scrollRef}>
+              {reviews.map((r) => (
+                <article key={r.id} className={styles.card}>
+                  <div className={styles.avatarWrap}>
+                    <ReviewCardAvatar name={r.name} avatarUrl={r.avatar_url} youtubeUrl={r.youtube_url} />
                   </div>
-                  <p className={styles.reviewText}>{getText(r)}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
 
-        <button
-          type="button"
-          className={styles.carouselArrow}
-          onClick={next}
-          disabled={atEnd}
-          aria-label="Keyingi"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 18l6-6-6-6" />
-          </svg>
-        </button>
-      </div>
+                  <div className={styles.cardBody}>
+                    <div className={styles.cardMeta}>
+                      <h4 className={styles.reviewerName}>{r.name}</h4>
+                      {(r.age || r.profession) && (
+                        <p className={styles.reviewerJob}>
+                          {[r.age, r.profession].filter(Boolean).join(", ")}
+                        </p>
+                      )}
+                      <p className={styles.city}>{r.city}</p>
+                    </div>
+                    <p className={styles.reviewText}>{getText(r)}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <button
+            type="button"
+            className={styles.carouselArrow}
+            onClick={next}
+            disabled={atEnd}
+            aria-label="Keyingi"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
+        </div>
+      )}
 
       <div className={styles.managerSection}>
         <div className={styles.managerInfo}>

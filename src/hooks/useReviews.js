@@ -14,18 +14,24 @@ export function useReviews() {
 
   useEffect(() => {
     async function load() {
-      if (isSupabaseConfigured() && supabase) {
-        const { data } = await supabase.from("reviews").select("*").order("sort_order");
-        if (data?.length > 0) {
-          setReviews(data);
+      try {
+        if (isSupabaseConfigured() && supabase) {
+          const { data, error } = await supabase.from("reviews").select("*").order("sort_order");
+          if (!error && data?.length > 0) {
+            setReviews(data);
+          } else {
+            setReviews(DEFAULT_REVIEWS);
+          }
         } else {
-          setReviews(DEFAULT_REVIEWS);
+          const local = getLocalReviews();
+          setReviews(local || DEFAULT_REVIEWS);
         }
-      } else {
-        const local = getLocalReviews();
-        setReviews(local || DEFAULT_REVIEWS);
+      } catch (e) {
+        console.warn("useReviews:", e);
+        setReviews(DEFAULT_REVIEWS);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     }
     load();
   }, []);

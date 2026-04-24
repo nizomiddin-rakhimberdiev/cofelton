@@ -33,18 +33,24 @@ export function useProducts() {
 
   useEffect(() => {
     async function load() {
-      if (isSupabaseConfigured() && supabase) {
-        const { data } = await supabase.from("products").select("*").order("sort_order");
-        if (data?.length > 0) {
-          setProducts(data);
+      try {
+        if (isSupabaseConfigured() && supabase) {
+          const { data, error } = await supabase.from("products").select("*").order("sort_order");
+          if (!error && data?.length > 0) {
+            setProducts(data);
+          } else {
+            setProducts(DEFAULT_PRODUCTS);
+          }
         } else {
-          setProducts(DEFAULT_PRODUCTS);
+          const local = getLocalProducts();
+          setProducts(local || DEFAULT_PRODUCTS);
         }
-      } else {
-        const local = getLocalProducts();
-        setProducts(local || DEFAULT_PRODUCTS);
+      } catch (e) {
+        console.warn("useProducts:", e);
+        setProducts(DEFAULT_PRODUCTS);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     }
     load();
   }, []);

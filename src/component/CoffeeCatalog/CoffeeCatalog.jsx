@@ -39,7 +39,9 @@ function CoffeeCatalog() {
     return raw.match(/\d+/)?.[0] || "";
   };
 
-  if (loading) return <div className={styles.catalog}><p>Yuklanmoqda...</p></div>;
+  if (loading || products.length === 0) {
+    return null;
+  }
 
   return (
     <div className={styles.catalog}>
