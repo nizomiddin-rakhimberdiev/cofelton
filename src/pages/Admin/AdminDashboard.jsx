@@ -4,8 +4,22 @@ import { getLocalProducts, setLocalProducts, getLocalReviews, setLocalReviews } 
 import { uploadProductImage } from "../../lib/upload";
 import styles from "./Admin.module.css";
 
+function ConfirmDialog({ message, onConfirm, onCancel }) {
+  return (
+    <div className={styles.confirmOverlay} onClick={onCancel}>
+      <div className={styles.confirmBox} onClick={(e) => e.stopPropagation()}>
+        <p>{message}</p>
+        <div className={styles.confirmActions}>
+          <button onClick={onCancel}>Bekor qilish</button>
+          <button onClick={onConfirm} className={styles.btnDanger}>O'chirish</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const DEFAULT_PRODUCTS = [
-  { id: "1", name_ru: "Кофемашина Jetinno JL24/JL25", name_uz: "Kofe mashinasi Jetinno JL24/JL25", price_som: "54 500 000 so'm", promo_until: "2025-03-31", features_ru: ["Кофемашина Jetinno JL24/JL25", "Мебельная стойка", "Два диспенсера", "Оплата по QR-коду", "Купюроприёмник"], features_uz: ["Kofe mashinasi Jetinno JL24/JL25", "Mebel stoykasi", "Ikkita dispenser", "QR code orqali to'lov", "Naqt pul qabul qilgich"], delivery_days: "10", image_url: null, sort_order: 0 },
+  { id: "1", name_ru: "Кофемашина Jetinno JL24/JL25", name_uz: "Kofe mashinasi Jetinno JL24/JL25", price_som: "54 500 000 so'm", promo_until: null, features_ru: ["Кофемашина Jetinno JL24/JL25", "Мебельная стойка", "Два диспенсера", "Оплата по QR-коду", "Купюроприёмник"], features_uz: ["Kofe mashinasi Jetinno JL24/JL25", "Mebel stoykasi", "Ikkita dispenser", "QR code orqali to'lov", "Naqt pul qabul qilgich"], delivery_days: "10", image_url: null, sort_order: 0 },
   { id: "2", name_ru: "Металлический каркас", name_uz: "Metallik karkas", price_som: "33 584 000 so'm", promo_until: null, features_ru: ["Металлический каркас", "Электрика", "Утепление", "Регулируемые ножки", "Модем телеметрии"], features_uz: ["Metallik karkas", "Elektr ta'minot", "Izolyatsiya", "Sozlanadigan oyoqchalar", "Telemetriya modemi"], delivery_days: "15", image_url: null, sort_order: 1 },
 ];
 
@@ -21,16 +35,6 @@ export default function AdminDashboard({ cities }) {
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
   const useDb = isSupabaseConfigured();
-
-  useEffect(() => {
-    if (useDb && supabase) {
-      loadData();
-    } else {
-      setProducts(getLocalProducts() || DEFAULT_PRODUCTS);
-      setReviews(getLocalReviews() || DEFAULT_REVIEWS);
-      setLoading(false);
-    }
-  }, [activeTab, useDb]);
 
   const loadData = async () => {
     setLoading(true);
@@ -59,9 +63,20 @@ export default function AdminDashboard({ cities }) {
     setLoading(false);
   };
 
-  const loadLocal = () => {
-    setProducts(getLocalProducts() || DEFAULT_PRODUCTS);
-    setReviews(getLocalReviews() || DEFAULT_REVIEWS);
+  useEffect(() => {
+    if (useDb && supabase) {
+      loadData();
+    } else {
+      setProducts(getLocalProducts() || DEFAULT_PRODUCTS);
+      setReviews(getLocalReviews() || DEFAULT_REVIEWS);
+      setLoading(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab, useDb]);
+
+  const reloadLocal = () => {
+    if (activeTab === "products") setProducts(getLocalProducts() || DEFAULT_PRODUCTS);
+    else if (activeTab === "reviews") setReviews(getLocalReviews() || DEFAULT_REVIEWS);
   };
 
   const tabs = [
@@ -103,9 +118,9 @@ export default function AdminDashboard({ cities }) {
         ) : loading ? (
           <p>Yuklanmoqda...</p>
         ) : activeTab === "products" ? (
-          <ProductsSection products={products} onUpdate={useDb ? loadData : loadLocal} useDb={useDb} />
+          <ProductsSection products={products} onUpdate={useDb ? loadData : reloadLocal} useDb={useDb} />
         ) : activeTab === "reviews" ? (
-          <ReviewsSection reviews={reviews} cities={cities} onUpdate={useDb ? loadData : loadLocal} useDb={useDb} />
+          <ReviewsSection reviews={reviews} cities={cities} onUpdate={useDb ? loadData : reloadLocal} useDb={useDb} />
         ) : activeTab === "submissions" ? (
           <SubmissionsSection submissions={submissions} />
         ) : (
@@ -120,6 +135,7 @@ function ProductsSection({ products, onUpdate, useDb }) {
   const [editing, setEditing] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState("");
+  const [confirmDeleteId, setConfirmDeleteId] = useState(null);
   const fileInputRef = useRef(null);
   const [form, setForm] = useState({
     name_ru: "", name_uz: "", price_som: "",
@@ -147,9 +163,13 @@ function ProductsSection({ products, onUpdate, useDb }) {
   };
 
   const saveProduct = async () => {
+    if (!form.name_ru.trim() || !form.name_uz.trim()) {
+      alert("Mahsulot nomini ikkala tilda kiriting (RU va UZ)");
+      return;
+    }
     const data = {
-      name_ru: form.name_ru || "Yangi maxsulot",
-      name_uz: form.name_uz || "Yangi maxsulot",
+      name_ru: form.name_ru.trim(),
+      name_uz: form.name_uz.trim(),
       price_som: form.price_som,
       promo_until: form.promo_until || null,
       features_ru: form.features_ru.split("\n").filter(Boolean),
@@ -180,12 +200,12 @@ function ProductsSection({ products, onUpdate, useDb }) {
   };
 
   const deleteProduct = async (id) => {
-    if (!confirm("O'chirilsinmi?")) return;
     if (useDb && supabase) {
       await supabase.from("products").delete().eq("id", id);
     } else {
       setLocalProducts(products.filter((p) => p.id !== id));
     }
+    setConfirmDeleteId(null);
     onUpdate();
   };
 
@@ -207,6 +227,8 @@ function ProductsSection({ products, onUpdate, useDb }) {
       <div className={styles.formCard}>
         <h3>{editing ? "Tahrirlash" : "Yangi maxsulot"}</h3>
         <div className={styles.formGrid}>
+          <input placeholder="Nomi (RU)" value={form.name_ru} onChange={(e) => setForm({ ...form, name_ru: e.target.value })} />
+          <input placeholder="Nomi (UZ)" value={form.name_uz} onChange={(e) => setForm({ ...form, name_uz: e.target.value })} />
           <input placeholder="Narx (so'm)" value={form.price_som} onChange={(e) => setForm({ ...form, price_som: e.target.value })} />
           <label className={styles.dateField}>
             <span>Aksiya tugash sanasi</span>
@@ -267,17 +289,25 @@ function ProductsSection({ products, onUpdate, useDb }) {
             </div>
             <div className={styles.cardActions}>
               <button onClick={() => editProduct(p)}>Tahrir</button>
-              <button onClick={() => deleteProduct(p.id)} className={styles.btnDanger}>O'chirish</button>
+              <button onClick={() => setConfirmDeleteId(p.id)} className={styles.btnDanger}>O'chirish</button>
             </div>
           </div>
         ))}
       </div>
+      {confirmDeleteId && (
+        <ConfirmDialog
+          message="Bu mahsulotni o'chirishni tasdiqlaysizmi?"
+          onConfirm={() => deleteProduct(confirmDeleteId)}
+          onCancel={() => setConfirmDeleteId(null)}
+        />
+      )}
     </div>
   );
 }
 
 function ReviewsSection({ reviews, cities, onUpdate, useDb }) {
   const [editing, setEditing] = useState(null);
+  const [confirmDeleteId, setConfirmDeleteId] = useState(null);
   const [form, setForm] = useState({ name: "", age: "", profession: "", city: cities[0] || "", text_ru: "", text_uz: "", youtube_url: "", avatar_url: "" });
 
   const saveReview = async () => {
@@ -303,12 +333,12 @@ function ReviewsSection({ reviews, cities, onUpdate, useDb }) {
   };
 
   const deleteReview = async (id) => {
-    if (!confirm("O'chirilsinmi?")) return;
     if (useDb && supabase) {
       await supabase.from("reviews").delete().eq("id", id);
     } else {
       setLocalReviews(reviews.filter((r) => r.id !== id));
     }
+    setConfirmDeleteId(null);
     onUpdate();
   };
 
@@ -348,11 +378,18 @@ function ReviewsSection({ reviews, cities, onUpdate, useDb }) {
             </div>
             <div className={styles.cardActions}>
               <button onClick={() => editReview(r)}>Tahrir</button>
-              <button onClick={() => deleteReview(r.id)} className={styles.btnDanger}>O'chirish</button>
+              <button onClick={() => setConfirmDeleteId(r.id)} className={styles.btnDanger}>O'chirish</button>
             </div>
           </div>
         ))}
       </div>
+      {confirmDeleteId && (
+        <ConfirmDialog
+          message="Bu sharhni o'chirishni tasdiqlaysizmi?"
+          onConfirm={() => deleteReview(confirmDeleteId)}
+          onCancel={() => setConfirmDeleteId(null)}
+        />
+      )}
     </div>
   );
 }

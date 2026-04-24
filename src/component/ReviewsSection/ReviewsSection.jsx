@@ -4,6 +4,7 @@ import manager from "../../assets/manager.png";
 import { useLanguage } from "../../i18n/LanguageContext";
 import { useLeadFormModal } from "../../context/LeadFormModalContext";
 import { useReviews } from "../../hooks/useReviews";
+import { phoneToTelHref } from "../../lib/phone";
 
 /** Bo'shliqlar, yopishgan so'zlar (masalan izohO'zbekcha) */
 function formatReviewText(s) {
@@ -54,8 +55,7 @@ export default function ReviewsSection() {
 
   const getText = (r) => formatReviewText(lang === "uz" ? r.text_uz : r.text_ru);
 
-  const phoneNum = t("phone").replace(/\D/g, "");
-  const phoneHref = "tel:+" + (phoneNum.startsWith("8") ? "7" + phoneNum.slice(1) : phoneNum);
+  const phoneHref = phoneToTelHref(t("phone"));
 
   const scrollToIndex = useCallback((index) => {
     const el = scrollRef.current;

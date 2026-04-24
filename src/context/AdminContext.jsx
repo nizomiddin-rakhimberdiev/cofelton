@@ -1,9 +1,9 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState } from "react";
 
 const AdminContext = createContext();
 
-const ADMIN_USER = "admin";
-const ADMIN_PASS = "cofelton2024";
+const ADMIN_USER = import.meta.env.VITE_ADMIN_USER || "admin";
+const ADMIN_PASS = import.meta.env.VITE_ADMIN_PASS || "cofelton2024";
 
 export function AdminProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {

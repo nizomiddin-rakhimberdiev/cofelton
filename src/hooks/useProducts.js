@@ -8,7 +8,7 @@ const DEFAULT_PRODUCTS = [
     name_ru: "Кофемашина Jetinno JL24/JL25",
     name_uz: "Kofe mashinasi Jetinno JL24/JL25",
     price_som: "54 500 000 so'm",
-    promo_until: "2025-03-31",
+    promo_until: null,
     features_ru: ["Кофемашина Jetinno JL24/JL25", "Мебельная стойка", "Два диспенсера", "Оплата по QR-коду", "Купюроприёмник"],
     features_uz: ["Kofe mashinasi Jetinno JL24/JL25", "Mebel stoykasi", "Ikkita dispenser", "QR code orqali to'lov", "Naqt pul qabul qilgich"],
     delivery_days: "10",
@@ -27,7 +27,7 @@ const DEFAULT_PRODUCTS = [
   },
 ];
 
-export function useProducts(lang) {
+export function useProducts() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 

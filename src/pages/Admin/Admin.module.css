@@ -426,6 +426,62 @@
   font-size: 0.875rem;
 }
 
+.confirmOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.confirmBox {
+  background: #18181b;
+  border: 1px solid #27272a;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.confirmBox p {
+  margin: 0 0 20px;
+  font-size: 1rem;
+  color: #e4e4e7;
+}
+
+.confirmActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.confirmActions button {
+  padding: 8px 16px;
+  border: 1px solid #3f3f46;
+  border-radius: 8px;
+  background: #27272a;
+  color: #e4e4e7;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.confirmActions button:hover {
+  background: #3f3f46;
+}
+
+.confirmActions .btnDanger {
+  background: #ef4444;
+  border-color: #ef4444;
+  color: #fff;
+}
+
+.confirmActions .btnDanger:hover {
+  background: #dc2626;
+}
+
 @media (max-width: 640px) {
   .formGrid {
     grid-template-columns: 1fr;

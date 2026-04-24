@@ -8,7 +8,7 @@ const DEFAULT_REVIEWS = [
   { id: "3", name: "Aziz Toshmatov", age: "26 yosh", profession: null, city: "Buxoro", text_ru: "Все напитки...", text_uz: "Barcha ichimliklar...", youtube_url: null },
 ];
 
-export function useReviews(lang) {
+export function useReviews() {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
 

@@ -3,13 +3,13 @@ import booth from "../../assets/main3.png";
 import { useLanguage } from "../../i18n/LanguageContext";
 import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 import { useLeadFormModal } from "../../context/LeadFormModalContext";
+import { phoneToTelHref } from "../../lib/phone";
 
 function Hero() {
   const { t } = useLanguage();
   const { openModal } = useLeadFormModal();
 
-  const phoneNum = t("phone").replace(/\D/g, "");
-  const phoneHref = "tel:+" + (phoneNum.startsWith("8") ? "7" + phoneNum.slice(1) : phoneNum);
+  const phoneHref = phoneToTelHref(t("phone"));
 
   return (
     <section className={styles.hero}>

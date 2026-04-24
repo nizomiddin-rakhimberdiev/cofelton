@@ -24,13 +24,11 @@ export const translations = {
     aboutRutube: "На нашем Rutube-канале мы честно рассказываем о преимуществах и недостатках",
     statsPartners: "партнёров",
     statsYears: "работаем с 2023 года",
-    statsProduction: "собственное производство",
     statsCities: "в городах",
     statsCountries: "страны",
     statsCountriesList: "(Узбекистан, Россия)",
     statsNum1: "16+",
     statsNum2: "2023",
-    statsNum3: "40 м²",
     statsNum4: "5",
     statsNum5: "2",
 
@@ -56,7 +54,6 @@ export const translations = {
     // Coffee Catalog
     priceFrom: "Цена от",
     currencySuffix: "сум",
-    priceUsd: "4500 y.e($)",
     deliveryLabel: "Срок отгрузки",
     deliveryDays: "от 10 дней",
     deliveryDays15: "от 15 дней",
@@ -173,13 +170,11 @@ export const translations = {
     aboutRutube: "Rutube kanalimizda soddalik va kamchiliklarni ochiq muhokama qilamiz",
     statsPartners: "hamkorlar",
     statsYears: "yildan beri ishlaymiz",
-    statsProduction: "o'z ishlab chiqarish",
     statsCities: "shaharda",
     statsCountries: "mamlakat",
     statsCountriesList: "(O'zbekiston, Rossiya)",
     statsNum1: "16+",
     statsNum2: "2023",
-    statsNum3: "40 m²",
     statsNum4: "5",
     statsNum5: "2",
 
@@ -205,7 +200,6 @@ export const translations = {
     // Coffee Catalog
     priceFrom: "Narxi",
     currencySuffix: "so'm",
-    priceUsd: "4500 y.e($)",
     deliveryLabel: "Yetkazib berish muddati",
     deliveryDays: "10 kundan",
     deliveryDays15: "15 kundan",

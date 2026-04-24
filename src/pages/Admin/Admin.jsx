@@ -1,7 +1,4 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
 import { useAdmin } from "../../context/AdminContext";
-import { supabase, isSupabaseConfigured } from "../../lib/supabase";
 import AdminLogin from "./AdminLogin";
 import AdminDashboard from "./AdminDashboard";
 import styles from "./Admin.module.css";
@@ -13,8 +10,6 @@ const CITIES = [
 
 export default function Admin() {
   const { isLoggedIn, logout } = useAdmin();
-  const navigate = useNavigate();
-  const location = useLocation();
 
   if (!isLoggedIn) {
     return <AdminLogin />;

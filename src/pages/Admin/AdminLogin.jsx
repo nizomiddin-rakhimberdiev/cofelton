@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAdmin } from "../../context/AdminContext";
 import styles from "./Admin.module.css";
 
@@ -8,14 +7,11 @@ export default function AdminLogin() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const { login } = useAdmin();
-  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
-    if (login(username, password)) {
-      navigate("/admin");
-    } else {
+    if (!login(username, password)) {
       setError("Login yoki parol noto'g'ri");
     }
   };
@@ -24,7 +20,6 @@ export default function AdminLogin() {
     <div className={styles.loginPage}>
       <div className={styles.loginBox}>
         <h1>Cofelton Admin</h1>
-        <p className={styles.loginHint}>Login: admin | Parol: cofelton2024</p>
         <form onSubmit={handleSubmit} className={styles.loginForm}>
           <input
             type="text"

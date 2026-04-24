@@ -15,8 +15,6 @@ export default function LeadFormModal() {
   const [policy, setPolicy] = useState(false);
   const [status, setStatus] = useState("idle");
 
-  const displayButtonText = formType === "contract" ? t("getContract") : formType === "locations" ? t("getLocations") : formType === "businessPlan" ? t("getBusinessPlan") : t("buyCoffee");
-
   useEffect(() => {
     if (isOpen) document.body.style.overflow = "hidden";
     return () => { document.body.style.overflow = ""; };
@@ -80,13 +78,13 @@ export default function LeadFormModal() {
               <input type="checkbox" checked={commercialProposal} onChange={(e) => setCommercialProposal(e.target.checked)} />
               {t("commercialProposal")}
             </label>
-            <button type="submit" disabled={status === "sending" || !policy}>
-              {status === "sending" ? t("submitSending") : t("submitButton")}
-            </button>
             <label className={styles.policy}>
               <input type="checkbox" checked={policy} onChange={(e) => setPolicy(e.target.checked)} required />
               {t("policyText")}
             </label>
+            <button type="submit" disabled={status === "sending" || !policy}>
+              {status === "sending" ? t("submitSending") : t("submitButton")}
+            </button>
             {status === "error" && <p className={styles.error}>{t("submitError")}</p>}
           </form>
         )}

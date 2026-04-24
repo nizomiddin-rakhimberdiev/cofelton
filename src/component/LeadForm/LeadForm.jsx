@@ -4,13 +4,6 @@ import { sendToTelegram } from "../../services/telegram";
 import { saveFormSubmission } from "../../lib/analytics";
 import styles from "./LeadForm.module.css";
 
-const FORM_TYPES = {
-  contract: "contract",
-  locations: "locations",
-  businessPlan: "businessPlan",
-  buy: "buy",
-};
-
 export default function LeadForm({ formType = "contract", buttonText, onSuccess, className = "", variant = "light" }) {
   const { t } = useLanguage();
   const [name, setName] = useState("");
@@ -68,16 +61,14 @@ export default function LeadForm({ formType = "contract", buttonText, onSuccess,
         required
         disabled={status === "sending"}
       />
-      <button type="submit" disabled={status === "sending" || !policy}>
-        {status === "sending" ? t("submitSending") : displayButtonText}
-      </button>
       <label className={styles.policy}>
         <input type="checkbox" checked={policy} onChange={(e) => setPolicy(e.target.checked)} />
         {t("policyText")}
       </label>
+      <button type="submit" disabled={status === "sending" || !policy}>
+        {status === "sending" ? t("submitSending") : displayButtonText}
+      </button>
       {status === "error" && <p className={styles.error}>{t("submitError")}</p>}
     </form>
   );
 }
-
-export { FORM_TYPES };

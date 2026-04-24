@@ -30,10 +30,6 @@ function About() {
             <h4>{t("statsNum2")}</h4>
             <p>{t("statsYears")}</p>
           </div>
-          {/* <div className={styles.card}>
-            <h4>{t("statsNum3")}</h4>
-            <p>{t("statsProduction")}</p>
-          </div> */}
           <div className={styles.card}>
             <h4>{t("statsNum4")}</h4>
             <p>{t("statsCities")}</p>
